@@ -231,9 +231,9 @@ const addressChange = (e) => {
 }
 
 const submitForm = () => {
-  form.value.addressCode = form.value.addressCode.toString();
   userFormRef.value.validate((valid: any) => {
     if (valid) {
+      form.value.addressCode = form.value.addressCode.toString();
       if (form.value.id != undefined) {
         updateUser(form.value).then(() => {
           ElMessage({

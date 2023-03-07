@@ -1,59 +1,57 @@
 <template>
   <div class="app-container">
-    <div class="list-container">
 
-      <el-row :gutter="10">
-        <el-col :span="1.5">
-          <el-button type="primary" plain @click="handleAdd"> 新增 </el-button>
-        </el-col>
-        <el-col :span="1.5">
-          <el-button type="danger" plain :disabled="multiple" @click="handleDelete"> 删除 </el-button>
-        </el-col>
-        <el-col :span="1.5">
-          <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
-            <el-form-item label="姓名" prop="username">
-              <el-input
-                  v-model="queryParams.username"
-                  placeholder="请输入姓名"
-                  @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="handleQuery">搜索</el-button>
-              <el-button @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
+    <el-row :gutter="10">
+      <el-col :span="1.5">
+        <el-button type="primary" plain @click="handleAdd"> 新增 </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="danger" plain :disabled="multiple" @click="handleDelete"> 删除 </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
+          <el-form-item label="姓名" prop="username">
+            <el-input
+                v-model="queryParams.username"
+                placeholder="请输入姓名"
+                @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="handleQuery">搜索</el-button>
+            <el-button @click="resetQuery">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
 
-      <el-table border v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="姓名" align="center" prop="username" :show-overflow-tooltip="true" />
-        <el-table-column label="年龄" align="center" prop="age" :show-overflow-tooltip="true" />
-        <el-table-column label="性别" align="center" prop="gender">
-          <template #default="scope">
-            {{ getDictData(scope.row.gender)}}
-          </template>
-        </el-table-column>
-        <el-table-column label="联系电话" align="center" prop="phoneNumber" :show-overflow-tooltip="true" />
-        <el-table-column label="详细地址" align="center" prop="address" :show-overflow-tooltip="true" />
-        <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
-          <template #default="scope">
-            <el-button link type="primary" @click="handleUpdate(scope.row)"> 修改 </el-button>
-            <el-button link type="danger" @click="handleDelete(scope.row)"> 删除 </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <pagination
-          style="padding-top: 10px"
-          v-show="total > 0"
-          :total="total"
-          :layout="pageLayout"
-          v-model:page="queryParams.pageNum"
-          v-model:limit="queryParams.pageSize"
-          @pagination="getUserList"
-      />
-    </div>
+    <el-table border v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="姓名" align="center" prop="username" :show-overflow-tooltip="true" />
+      <el-table-column label="年龄" align="center" prop="age" :show-overflow-tooltip="true" />
+      <el-table-column label="性别" align="center" prop="gender">
+        <template #default="scope">
+          {{ getDictData(scope.row.gender)}}
+        </template>
+      </el-table-column>
+      <el-table-column label="联系电话" align="center" prop="phoneNumber" :show-overflow-tooltip="true" />
+      <el-table-column label="详细地址" align="center" prop="address" :show-overflow-tooltip="true" />
+      <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
+        <template #default="scope">
+          <el-button link type="primary" @click="handleUpdate(scope.row)"> 修改 </el-button>
+          <el-button link type="danger" @click="handleDelete(scope.row)"> 删除 </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <pagination
+        style="padding-top: 10px"
+        v-show="total > 0"
+        :total="total"
+        :layout="pageLayout"
+        v-model:page="queryParams.pageNum"
+        v-model:limit="queryParams.pageSize"
+        @pagination="getUserList"
+    />
 
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" @close="closeDialog" append-to-body>
       <el-form ref="userFormRef" :model="form" :rules="rules" label-width="80px">
@@ -229,10 +227,10 @@ const addressChange = (e) => {
   const d2 = chinaData[e[1]]
   const d3 = chinaData[e[2]]
   addressStr.value = d1.label+"-"+d2.label+"-"+d3.label;
+  form.value.address = addressStr.value;
 }
 
 const submitForm = () => {
-  form.value.address = addressStr.value;
   form.value.addressCode = form.value.addressCode.toString();
   userFormRef.value.validate((valid: any) => {
     if (valid) {

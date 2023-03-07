@@ -5,10 +5,10 @@ server:
 # Spring配置
 spring:
   datasource:
-    url: jdbc:mysql://172.19.0.2:3306/yytest?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/yytest?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     driverClassName: com.mysql.cj.jdbc.Driver
-    username: dev
-    password: dev@root
+    username: root
+    password: mysql123456
     type: com.alibaba.druid.pool.DruidDataSource
 
 # MyBatis配置

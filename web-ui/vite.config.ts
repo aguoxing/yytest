@@ -26,7 +26,7 @@ export default defineConfig(({ mode, command }) => {
       // 代理
       proxy: {
         [env.VITE_APP_BASE_API]: {
-          target: 'http://localhost:8081',
+          target: 'http://localhost:8082',
           changeOrigin: true,
           rewrite: path => path.replace(new RegExp(`^${env.VITE_APP_BASE_API}`), '')
         }

@@ -26,7 +26,7 @@
             <if test="age != null ">and age = #{age}</if>
             <if test="gender != null ">and gender = #{gender}</if>
             <if test="phoneNumber != null  and phoneNumber != ''">and phone_number = #{phoneNumber}</if>
-            <if test="address != null  and address != ''">and address = #{address}</if>
+            <if test="address != null  and address != ''">and address like concat('%', #{address}, '%'</if>
             <if test="addressCode != null  and addressCode != ''">and address_code = #{addressCode}</if>
         </where>
     </select>

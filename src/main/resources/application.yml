@@ -1,0 +1,19 @@
+# 开发环境配置
+server:
+  port: 8082
+
+# Spring配置
+spring:
+  datasource:
+    url: jdbc:mysql://172.19.0.2:3306/yytest?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: dev
+    password: dev@root
+    type: com.alibaba.druid.pool.DruidDataSource
+
+# MyBatis配置
+mybatis:
+    # 搜索指定包别名
+    typeAliasesPackage: com.test.**.domain
+    # 配置mapper的扫描，找到所有的mapper.xml映射文件
+    mapperLocations: classpath*:mapper/**/*Mapper.xml

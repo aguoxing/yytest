@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mapper.UserMapper">
+
+    <resultMap type="User" id="UserResult">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="age" column="age"/>
+        <result property="gender" column="gender"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="address" column="address"/>
+        <result property="addressCode" column="address_code"/>
+    </resultMap>
+
+    <sql id="selectUserVo">
+        select id, username, age, gender, phone_number, address, address_code
+        from user
+    </sql>
+
+    <select id="selectUserList" parameterType="User" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        <where>
+            <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
+            <if test="age != null ">and age = #{age}</if>
+            <if test="gender != null ">and gender = #{gender}</if>
+            <if test="phoneNumber != null  and phoneNumber != ''">and phone_number = #{phoneNumber}</if>
+            <if test="address != null  and address != ''">and address = #{address}</if>
+            <if test="addressCode != null  and addressCode != ''">and address_code = #{addressCode}</if>
+        </where>
+    </select>
+
+    <select id="selectUserById" parameterType="Long" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="username != null">username,</if>
+            <if test="age != null">age,</if>
+            <if test="gender != null">gender,</if>
+            <if test="phoneNumber != null">phone_number,</if>
+            <if test="address != null">address,</if>
+            <if test="addressCode != null">address_code,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="username != null">#{username},</if>
+            <if test="age != null">#{age},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="phoneNumber != null">#{phoneNumber},</if>
+            <if test="address != null">#{address},</if>
+            <if test="addressCode != null">#{addressCode},</if>
+        </trim>
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        update user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null">username = #{username},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="addressCode != null">address_code = #{addressCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserById" parameterType="Long">
+        delete
+        from user
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteUserByIds" parameterType="String">
+        delete from user where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
